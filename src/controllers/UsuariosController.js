@@ -5,21 +5,22 @@ class UsuariosController {
     try {
       const novoUsuario = req.body;
 
-      if (!novoUsuario.nome || !novoUsuario.email || !novoUsuario.senha) {
-        resp
-          .status(400)
-          .send("Os campos nome, email e senha são obrigatórios.");
+      if (!nome || !email || !senha || !celular || !data_nascimento || !cep) {
+        toast.error('Preencha todos os campos.');
         return;
-      }
+    }
 
       const conexao = await new ConexaoMySql().getConexao();
       const comandoSql =
-        "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, md5(?))";
+        "INSERT INTO usuarios (nome, email, senha, celular, data_nascimento, cep) VALUES (?, ?, md5(?), ?, ?, ?)";
 
       const [resultado] = await conexao.execute(comandoSql, [
         novoUsuario.nome,
         novoUsuario.email,
         novoUsuario.senha,
+        novoUsuario.celular,
+        novoUsuario.data_nascimento,
+        novoUsuario.cep
       ]);
 
       resp.send(resultado);

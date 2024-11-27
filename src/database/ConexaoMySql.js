@@ -5,7 +5,7 @@ const dbConfig = {
   port: "3306",
   user: "root",
   password: "senai",
-  database: "aulas_api_senai",
+  database: "banco_dados_SA",
 };
 
 class ConexaoMySql {
