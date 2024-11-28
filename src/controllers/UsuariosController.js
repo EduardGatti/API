@@ -4,22 +4,24 @@ class UsuariosController {
   async adicionar(req, resp) {
     try {
       const novoUsuario = req.body;
+      console.log(novoUsuario)
 
-      if (!nome || !email || !senha || !celular || !data_nascimento || !cep) {
-        toast.error('Preencha todos os campos.');
+      if (!novoUsuario.nome || !novoUsuario.email || !novoUsuario.senha || !novoUsuario.celular || !novoUsuario.dataNascimento || !novoUsuario.cep) {
+        resp.status(400).send("Preencha toodos campos");
         return;
-    }
-
-      const conexao = await new ConexaoMySql().getConexao();
+      }
+     
+    
+      const conexao = await new ConexaoMySql().getConexao();      
       const comandoSql =
-        "INSERT INTO usuarios (nome, email, senha, celular, data_nascimento, cep) VALUES (?, ?, md5(?), ?, ?, ?)";
-
+      "INSERT INTO usuarios (nome, email, senha, celular, data_nascimento, cep) VALUES (?, ?, md5(?), ?, ?, ?)";
+      
       const [resultado] = await conexao.execute(comandoSql, [
         novoUsuario.nome,
         novoUsuario.email,
         novoUsuario.senha,
         novoUsuario.celular,
-        novoUsuario.data_nascimento,
+        novoUsuario.dataNascimento,
         novoUsuario.cep
       ]);
 
